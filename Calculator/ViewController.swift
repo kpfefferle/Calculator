@@ -11,7 +11,9 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBAction func touchDigit(sender: UIButton) {
-        NSLog("touchDigit")
+        if let digit = sender.currentTitle {
+            NSLog("touchDigit #\(digit)")
+        }
     }
 
 }
