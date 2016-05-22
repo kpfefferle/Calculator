@@ -11,11 +11,18 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var display: UILabel!
+    
+    var userIsTyping = false
 
     @IBAction func touchDigit(sender: UIButton) {
         if let digit = sender.currentTitle,
           let currentDisplay = display.text {
-            display.text = currentDisplay + digit
+            if userIsTyping {
+                display.text = currentDisplay + digit
+            } else {
+                display.text = digit
+            }
+            userIsTyping = true
         }
     }
 
