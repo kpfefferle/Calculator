@@ -14,8 +14,8 @@ class ViewController: UIViewController {
 
     @IBAction func touchDigit(sender: UIButton) {
         if let digit = sender.currentTitle,
-          let textCurrentlyInDisplay = display.text {
-            display.text = textCurrentlyInDisplay + digit
+          let currentDisplay = display.text {
+            display.text = currentDisplay + digit
         }
     }
 
