@@ -26,5 +26,13 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBAction func performOperation(sender: UIButton) {
+        if let operation = sender.currentTitle {
+            if operation == "π" {
+                display.text = String(M_PI)
+            }
+        }
+    }
+
 }
 
