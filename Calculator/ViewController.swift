@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func performOperation(sender: UIButton) {
+        userIsTyping = false
         if let operation = sender.currentTitle {
             if operation == "π" {
                 display.text = String(M_PI)
