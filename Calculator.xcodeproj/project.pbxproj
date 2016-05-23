@@ -12,6 +12,7 @@
 		0A0AAFE91CF252E400EFCA8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A0AAFE71CF252E400EFCA8E /* Main.storyboard */; };
 		0A0AAFEB1CF252E400EFCA8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A0AAFEA1CF252E400EFCA8E /* Assets.xcassets */; };
 		0A0AAFEE1CF252E400EFCA8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A0AAFEC1CF252E400EFCA8E /* LaunchScreen.storyboard */; };
+		0A0AAFF71CF2972A00EFCA8E /* CalculatorBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		0A0AAFEA1CF252E400EFCA8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A0AAFED1CF252E400EFCA8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A0AAFEF1CF252E400EFCA8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				0A0AAFE51CF252E400EFCA8E /* ViewController.swift */,
 				0A0AAFE71CF252E400EFCA8E /* Main.storyboard */,
+				0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */,
 				0A0AAFF51CF255E400EFCA8E /* Supporting Files */,
 			);
 			path = Calculator;
@@ -144,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A0AAFF71CF2972A00EFCA8E /* CalculatorBrain.swift in Sources */,
 				0A0AAFE61CF252E400EFCA8E /* ViewController.swift in Sources */,
 				0A0AAFE41CF252E400EFCA8E /* AppDelegate.swift in Sources */,
 			);
