@@ -40,6 +40,8 @@ class ViewController: UIViewController {
         if let operation = sender.currentTitle {
             if operation == "π" {
                 displayValue = M_PI
+            } else if operation == "√" {
+                displayValue = sqrt(displayValue)
             }
         }
     }
