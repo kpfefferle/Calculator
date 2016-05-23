@@ -25,12 +25,21 @@ class ViewController: UIViewController {
             userIsTyping = true
         }
     }
+    
+    var displayValue: Double {
+        get {
+            return Double(display.text!)!
+        }
+        set {
+            display.text = String(newValue)
+        }
+    }
 
     @IBAction func performOperation(sender: UIButton) {
         userIsTyping = false
         if let operation = sender.currentTitle {
             if operation == "π" {
-                display.text = String(M_PI)
+                displayValue = M_PI
             }
         }
     }
