@@ -17,6 +17,9 @@ class ViewController: UIViewController {
     @IBAction private func touchDigit(sender: UIButton) {
         if let digit = sender.currentTitle,
           let currentDisplay = display.text {
+            if digit == "." && currentDisplay.rangeOfString(".") != nil {
+                return
+            }
             if userIsTyping {
                 display.text = currentDisplay + digit
             } else {
