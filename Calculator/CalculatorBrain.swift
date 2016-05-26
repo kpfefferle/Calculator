@@ -69,6 +69,12 @@ class CalculatorBrain {
         var binaryFunction: (Double, Double) -> Double
         var firstOperand: Double
     }
+
+    var isPartialResult: Bool {
+        get {
+            return pending != nil
+        }
+    }
     
     var result: Double {
         get {
