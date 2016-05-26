@@ -34,7 +34,11 @@ class ViewController: UIViewController {
             return Double(display.text!)!
         }
         set {
-            display.text = String(newValue)
+            if Double(newValue) == Double(Int(newValue)) {
+                display.text = String(Int(newValue))
+            } else {
+                display.text = String(newValue)
+            }
         }
     }
     
