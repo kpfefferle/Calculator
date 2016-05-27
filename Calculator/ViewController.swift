@@ -54,9 +54,12 @@ class ViewController: UIViewController {
     }
 
     private func updateDescription() {
-        var newDescription = brain.description
-        newDescription += brain.isPartialResult ? "..." : "="
-        descriptionDisplay.text = newDescription
+        if var newDescription = brain.description {
+            newDescription += brain.isPartialResult ? " ..." : " ="
+            descriptionDisplay.text = newDescription
+        } else {
+            descriptionDisplay.text = " "
+        }
     }
 }
 

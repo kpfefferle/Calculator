@@ -29,6 +29,7 @@ class CalculatorBrain {
         case UnaryOperation((Double) -> Double)
         case BinaryOperation((Double, Double) -> Double)
         case Equals
+        case Clear
     }
     
     private var operations: Dictionary<String,Operation> = [
@@ -40,44 +41,31 @@ class CalculatorBrain {
         "tan" : Operation.UnaryOperation(tan),
         "√" : Operation.UnaryOperation(sqrt),
         "x²" : Operation.UnaryOperation({ $0 * $0 }),
-        "x^y" : Operation.BinaryOperation(pow),
         "×" : Operation.BinaryOperation({ $0 * $1 }),
         "÷" : Operation.BinaryOperation({ $0 / $1 }),
         "+" : Operation.BinaryOperation({ $0 + $1 }),
         "−" : Operation.BinaryOperation({ $0 - $1 }),
-        "=" : Operation.Equals
+        "=" : Operation.Equals,
+        "C" : Operation.Clear
     ]
-    
-    private var descriptionString = ""
-    
-    var description: String {
-        get {
-            return descriptionString
-        }
-    }
     
     func performOperation(symbol: String) {
         if let operation = operations[symbol] {
+            updateDescription(symbol)
             switch operation {
             case .Constant(let value):
                 accumulator = value
             case .UnaryOperation(let function):
                 accumulator = function(accumulator)
             case .BinaryOperation(let function):
-                descriptionString += "\(doubleAsString(accumulator)) \(symbol) "
                 executePendingBinaryOperation()
                 pending = PendingBinaryOperation(binaryFunction: function, firstOperand: accumulator)
             case .Equals:
-                descriptionString += "\(doubleAsString(accumulator)) "
                 executePendingBinaryOperation()
+            case .Clear:
+                accumulator = 0.0
+                descriptionString = nil
             }
-        }
-    }
-    
-    private func executePendingBinaryOperation() {
-        if pending != nil {
-            accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
-            pending = nil
         }
     }
     
@@ -91,6 +79,40 @@ class CalculatorBrain {
     var isPartialResult: Bool {
         get {
             return pending != nil
+        }
+    }
+    
+    private func executePendingBinaryOperation() {
+        if pending != nil {
+            accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
+            pending = nil
+        }
+    }
+    
+    private var descriptionString: String?
+    
+    private func updateDescription(symbol: String) {
+        if let operation = operations[symbol] {
+            switch operation {
+            case .BinaryOperation:
+                if descriptionString == nil {
+                    descriptionString = "\(doubleAsString(accumulator)) \(symbol) "
+                } else {
+                    descriptionString! += " \(doubleAsString(accumulator)) \(symbol)"
+                }
+            case .Equals:
+                if descriptionString != nil {
+                    descriptionString! += "\(doubleAsString(accumulator))"
+                }
+            default:
+                return
+            }
+        }
+    }
+    
+    var description: String? {
+        get {
+            return descriptionString
         }
     }
     
