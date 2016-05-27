@@ -91,18 +91,32 @@ class CalculatorBrain {
     
     private var descriptionString: String?
     
+    private var accumulatorString: String {
+        get {
+            return doubleAsString(accumulator)
+        }
+    }
+    
     private func updateDescription(symbol: String) {
         if let operation = operations[symbol] {
             switch operation {
-            case .BinaryOperation:
+            case .UnaryOperation:
+                let newDescriptionContent = symbol == "x²" ? "(\(accumulatorString))²" : "\(symbol)(\(accumulatorString))"
                 if descriptionString == nil {
-                    descriptionString = "\(doubleAsString(accumulator)) \(symbol) "
+                    descriptionString = newDescriptionContent
                 } else {
-                    descriptionString! += " \(doubleAsString(accumulator)) \(symbol)"
+                    descriptionString! += " \(newDescriptionContent)"
+                }
+            case .BinaryOperation:
+                let newDescriptionContent = "\(accumulatorString) \(symbol)"
+                if descriptionString == nil {
+                    descriptionString = newDescriptionContent
+                } else {
+                    descriptionString! += " \(newDescriptionContent)"
                 }
             case .Equals:
                 if descriptionString != nil {
-                    descriptionString! += "\(doubleAsString(accumulator))"
+                    descriptionString! += " \(accumulatorString)"
                 }
             default:
                 return
