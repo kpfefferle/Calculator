@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet private weak var display: UILabel!
+    @IBOutlet private weak var descriptionDisplay: UILabel!
     
     private var userIsTyping = false
 
@@ -34,11 +35,7 @@ class ViewController: UIViewController {
             return Double(display.text!)!
         }
         set {
-            if Double(newValue) == Double(Int(newValue)) {
-                display.text = String(Int(newValue))
-            } else {
-                display.text = String(newValue)
-            }
+            display.text = doubleAsString(newValue)
         }
     }
     
@@ -53,7 +50,13 @@ class ViewController: UIViewController {
             brain.performOperation(operation)
         }
         displayValue = brain.result
+        updateDescription()
     }
 
+    private func updateDescription() {
+        var newDescription = brain.description
+        newDescription += brain.isPartialResult ? "..." : "="
+        descriptionDisplay.text = newDescription
+    }
 }
 

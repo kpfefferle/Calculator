@@ -8,6 +8,14 @@
 
 import Foundation
 
+func doubleAsString(number: Double) -> String {
+    if number == Double(Int(number)) {
+        return String(Int(number))
+    } else {
+        return String(number)
+    }
+}
+
 class CalculatorBrain {
     
     private var accumulator = 0.0
@@ -40,6 +48,14 @@ class CalculatorBrain {
         "=" : Operation.Equals
     ]
     
+    private var descriptionString = ""
+    
+    var description: String {
+        get {
+            return descriptionString
+        }
+    }
+    
     func performOperation(symbol: String) {
         if let operation = operations[symbol] {
             switch operation {
@@ -48,9 +64,11 @@ class CalculatorBrain {
             case .UnaryOperation(let function):
                 accumulator = function(accumulator)
             case .BinaryOperation(let function):
+                descriptionString += "\(doubleAsString(accumulator)) \(symbol) "
                 executePendingBinaryOperation()
                 pending = PendingBinaryOperation(binaryFunction: function, firstOperand: accumulator)
             case .Equals:
+                descriptionString += "\(doubleAsString(accumulator)) "
                 executePendingBinaryOperation()
             }
         }
