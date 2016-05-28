@@ -102,8 +102,12 @@ class CalculatorBrain {
     private var descriptionString: String?
     
     private func appendStringToDescription(string: String, userWasTyping: Bool) {
+        var userWasTypingOverride = userWasTyping
+        if case .Constant = previousOperation {
+            userWasTypingOverride = true
+        }
         if descriptionString == nil ||
-          (!isPartialResult && userWasTyping) {
+          (!isPartialResult && userWasTypingOverride) {
             descriptionString = string
         } else {
             descriptionString! += " \(string)"
@@ -143,7 +147,11 @@ class CalculatorBrain {
             case .Equals:
                 switch previousOperation {
                 case .UnaryOperation, .Equals:
-                    break
+                    if userWasTyping {
+                        fallthrough
+                    } else {
+                        break
+                    }
                 default:
                     appendStringToDescription(accumulatorString, userWasTyping: userWasTyping)
                 }
