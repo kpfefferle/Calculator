@@ -56,7 +56,7 @@ class CalculatorBrain {
         "+" : Operation.BinaryOperation({ $0 + $1 }),
         "−" : Operation.BinaryOperation({ $0 - $1 }),
         "=" : Operation.Equals,
-        "C" : Operation.Clear
+        "AC" : Operation.Clear
     ]
     
     func performOperation(symbol: String, userWasTyping: Bool) {
