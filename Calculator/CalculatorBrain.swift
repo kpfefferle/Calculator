@@ -131,7 +131,7 @@ class CalculatorBrain {
                 newDescriptionContent += "\(symbol)"
                 appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
             case .Equals:
-                if descriptionString != nil {
+                if descriptionString != nil && userWasTyping {
                     descriptionString! += " \(accumulatorString)"
                 }
             default:
