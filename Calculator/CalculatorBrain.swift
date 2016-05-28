@@ -110,14 +110,19 @@ class CalculatorBrain {
         if let operation = operations[symbol] {
             switch operation {
             case .UnaryOperation:
+                let stringToWrap = userWasTyping ? accumulatorString : descriptionString!
                 var newDescriptionContent = ""
                 switch symbol {
                 case "x²":
-                    newDescriptionContent = "(\(accumulatorString))²"
+                    newDescriptionContent = "(\(stringToWrap))²"
                 default:
-                    newDescriptionContent = "\(symbol)(\(accumulatorString))"
+                    newDescriptionContent = "\(symbol)(\(stringToWrap))"
                 }
-                appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
+                if userWasTyping {
+                    appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
+                } else {
+                    descriptionString = newDescriptionContent
+                }
             case .BinaryOperation:
                 var newDescriptionContent = ""
                 if userWasTyping {
@@ -137,7 +142,6 @@ class CalculatorBrain {
     
     var description: String? {
         get {
-            NSLog("Description: '\(descriptionString)'")
             return descriptionString
         }
     }
