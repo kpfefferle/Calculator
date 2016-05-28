@@ -150,7 +150,7 @@ class CalculatorBrain {
                     appendStringToDescription(accumulatorString, userWasTyping: userWasTyping)
                 }
                 constantWasUsed = false
-                equalsSkipAccumulator = false
+                equalsSkipAccumulator = true
             default:
                 constantWasUsed = false
                 equalsSkipAccumulator = false
