@@ -110,14 +110,11 @@ class CalculatorBrain {
         }
     }
     
-    private var constantWasUsed = false
-    private var equalsSkipAccumulator = false
+    private var previousOperation = Operation.Clear
     
     private func updateDescription(symbol: String, userWasTyping: Bool) {
         if let operation = operations[symbol] {
             switch operation {
-            case .Constant:
-                constantWasUsed = true
             case .UnaryOperation:
                 let stringToWrap = (userWasTyping || descriptionString == nil) ? accumulatorString : descriptionString!
                 var newDescriptionContent = ""
@@ -134,28 +131,26 @@ class CalculatorBrain {
                 } else {
                     descriptionString = newDescriptionContent
                 }
-                constantWasUsed = false
-                equalsSkipAccumulator = true
             case .BinaryOperation:
                 var newDescriptionContent = ""
-                if userWasTyping || constantWasUsed {
+                if userWasTyping {
+                    newDescriptionContent += "\(accumulatorString) "
+                } else if case .Constant = previousOperation {
                     newDescriptionContent += "\(accumulatorString) "
                 }
                 newDescriptionContent += "\(symbol)"
                 appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
-                constantWasUsed = false
-                equalsSkipAccumulator = false
             case .Equals:
-                if !equalsSkipAccumulator {
+                switch previousOperation {
+                case .UnaryOperation, .Equals:
+                    break
+                default:
                     appendStringToDescription(accumulatorString, userWasTyping: userWasTyping)
                 }
-                constantWasUsed = false
-                equalsSkipAccumulator = true
             default:
-                constantWasUsed = false
-                equalsSkipAccumulator = false
-                return
+                break
             }
+            previousOperation = operation
         }
     }
     
