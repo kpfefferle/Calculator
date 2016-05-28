@@ -22,7 +22,11 @@ class CalculatorBrain {
     
     private var accumulatorString: String {
         get {
-            return doubleAsString(accumulator)
+            switch accumulator {
+            case M_PI: return "π"
+            case M_E: return "e"
+            default: return doubleAsString(accumulator)
+            }
         }
     }
     
@@ -106,16 +110,20 @@ class CalculatorBrain {
         }
     }
     
+    private var constantWasUsed = false
+    private var equalsSkipAccumulator = false
+    
     private func updateDescription(symbol: String, userWasTyping: Bool) {
         if let operation = operations[symbol] {
             switch operation {
+            case .Constant:
+                constantWasUsed = true
             case .UnaryOperation:
-                let stringToWrap = userWasTyping ? accumulatorString : descriptionString!
+                let stringToWrap = (userWasTyping || descriptionString == nil) ? accumulatorString : descriptionString!
                 var newDescriptionContent = ""
-                switch symbol {
-                case "x²":
+                if symbol == "x²" {
                     newDescriptionContent = "(\(stringToWrap))²"
-                default:
+                } else {
                     newDescriptionContent = "\(symbol)(\(stringToWrap))"
                 }
                 if userWasTyping {
@@ -123,18 +131,26 @@ class CalculatorBrain {
                 } else {
                     descriptionString = newDescriptionContent
                 }
+                constantWasUsed = false
+                equalsSkipAccumulator = true
             case .BinaryOperation:
                 var newDescriptionContent = ""
-                if userWasTyping {
+                if userWasTyping || constantWasUsed {
                     newDescriptionContent += "\(accumulatorString) "
                 }
                 newDescriptionContent += "\(symbol)"
                 appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
+                constantWasUsed = false
+                equalsSkipAccumulator = false
             case .Equals:
-                if descriptionString != nil && userWasTyping {
+                if descriptionString != nil && !equalsSkipAccumulator {
                     descriptionString! += " \(accumulatorString)"
                 }
+                constantWasUsed = false
+                equalsSkipAccumulator = false
             default:
+                constantWasUsed = false
+                equalsSkipAccumulator = false
                 return
             }
         }
