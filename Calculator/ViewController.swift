@@ -42,12 +42,13 @@ class ViewController: UIViewController {
     private var brain = CalculatorBrain()
 
     @IBAction private func performOperation(sender: UIButton) {
+        let userWasTyping = userIsTyping
         if userIsTyping {
             brain.setOperand(displayValue)
             userIsTyping = false
         }
         if let operation = sender.currentTitle {
-            brain.performOperation(operation)
+            brain.performOperation(operation, userWasTyping: userWasTyping)
         }
         displayValue = brain.result
         updateDescription()

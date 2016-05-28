@@ -20,6 +20,12 @@ class CalculatorBrain {
     
     private var accumulator = 0.0
     
+    private var accumulatorString: String {
+        get {
+            return doubleAsString(accumulator)
+        }
+    }
+    
     func setOperand(operand: Double) {
         accumulator = operand
     }
@@ -49,9 +55,9 @@ class CalculatorBrain {
         "C" : Operation.Clear
     ]
     
-    func performOperation(symbol: String) {
+    func performOperation(symbol: String, userWasTyping: Bool) {
         if let operation = operations[symbol] {
-            updateDescription(symbol)
+            updateDescription(symbol, userWasTyping: userWasTyping)
             switch operation {
             case .Constant(let value):
                 accumulator = value
@@ -91,29 +97,34 @@ class CalculatorBrain {
     
     private var descriptionString: String?
     
-    private var accumulatorString: String {
-        get {
-            return doubleAsString(accumulator)
+    private func appendStringToDescription(string: String, userWasTyping: Bool) {
+        if descriptionString == nil ||
+          (!isPartialResult && userWasTyping) {
+            descriptionString = string
+        } else {
+            descriptionString! += " \(string)"
         }
     }
     
-    private func updateDescription(symbol: String) {
+    private func updateDescription(symbol: String, userWasTyping: Bool) {
         if let operation = operations[symbol] {
             switch operation {
             case .UnaryOperation:
-                let newDescriptionContent = symbol == "x²" ? "(\(accumulatorString))²" : "\(symbol)(\(accumulatorString))"
-                if descriptionString == nil {
-                    descriptionString = newDescriptionContent
-                } else {
-                    descriptionString! += " \(newDescriptionContent)"
+                var newDescriptionContent = ""
+                switch symbol {
+                case "x²":
+                    newDescriptionContent = "(\(accumulatorString))²"
+                default:
+                    newDescriptionContent = "\(symbol)(\(accumulatorString))"
                 }
+                appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
             case .BinaryOperation:
-                let newDescriptionContent = "\(accumulatorString) \(symbol)"
-                if descriptionString == nil {
-                    descriptionString = newDescriptionContent
-                } else {
-                    descriptionString! += " \(newDescriptionContent)"
+                var newDescriptionContent = ""
+                if userWasTyping {
+                    newDescriptionContent += "\(accumulatorString) "
                 }
+                newDescriptionContent += "\(symbol)"
+                appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
             case .Equals:
                 if descriptionString != nil {
                     descriptionString! += " \(accumulatorString)"
@@ -126,6 +137,7 @@ class CalculatorBrain {
     
     var description: String? {
         get {
+            NSLog("Description: '\(descriptionString)'")
             return descriptionString
         }
     }
