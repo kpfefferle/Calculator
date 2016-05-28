@@ -121,9 +121,12 @@ class CalculatorBrain {
             case .UnaryOperation:
                 let stringToWrap = (userWasTyping || descriptionString == nil) ? accumulatorString : descriptionString!
                 var newDescriptionContent = ""
-                if symbol == "x²" {
+                switch symbol {
+                case "x²":
                     newDescriptionContent = "(\(stringToWrap))²"
-                } else {
+                case "%":
+                    newDescriptionContent = "(\(stringToWrap))%"
+                default:
                     newDescriptionContent = "\(symbol)(\(stringToWrap))"
                 }
                 if userWasTyping {
@@ -143,8 +146,8 @@ class CalculatorBrain {
                 constantWasUsed = false
                 equalsSkipAccumulator = false
             case .Equals:
-                if descriptionString != nil && !equalsSkipAccumulator {
-                    descriptionString! += " \(accumulatorString)"
+                if !equalsSkipAccumulator {
+                    appendStringToDescription(accumulatorString, userWasTyping: userWasTyping)
                 }
                 constantWasUsed = false
                 equalsSkipAccumulator = false
