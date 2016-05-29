@@ -50,11 +50,16 @@ class ViewController: UIViewController {
         if let operation = sender.currentTitle {
             brain.performOperation(operation, userWasTyping: userWasTyping)
         }
-        displayValue = brain.result
-        updateDescription()
+        updateLabels()
+    }
+    
+    @IBAction func touchClear() {
+        brain.clear()
+        updateLabels()
     }
 
-    private func updateDescription() {
+    private func updateLabels() {
+        displayValue = brain.result
         if var newDescription = brain.description {
             newDescription += brain.isPartialResult ? " ..." : " ="
             descriptionDisplay.text = newDescription

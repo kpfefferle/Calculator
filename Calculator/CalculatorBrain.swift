@@ -29,7 +29,7 @@ class CalculatorBrain {
         }
     }
     private var internalDescription: String?
-    private var previousOperation = Operation.Clear
+    private var previousOperation = Operation.Equals
     
     private var accumulatorString: String {
         get {
@@ -51,7 +51,6 @@ class CalculatorBrain {
         case UnaryOperation((Double) -> Double)
         case BinaryOperation((Double, Double) -> Double)
         case Equals
-        case Clear
     }
     
     private var operations: [String:Operation] = [
@@ -67,8 +66,7 @@ class CalculatorBrain {
         "÷" : Operation.BinaryOperation({ $0 / $1 }),
         "+" : Operation.BinaryOperation({ $0 + $1 }),
         "−" : Operation.BinaryOperation({ $0 - $1 }),
-        "=" : Operation.Equals,
-        "AC" : Operation.Clear
+        "=" : Operation.Equals
     ]
     
     func performOperation(symbol: String, userWasTyping: Bool) {
@@ -85,8 +83,6 @@ class CalculatorBrain {
                 pending = PendingBinaryOperation(binaryFunction: function, firstOperand: accumulator)
             case .Equals:
                 executePendingBinaryOperation()
-            case .Clear:
-                clear()
             }
         }
     }
@@ -202,11 +198,11 @@ class CalculatorBrain {
         }
     }
 
-    private func clear() {
+    func clear() {
         accumulator = 0.0
         pending = nil
         internalProgram.removeAll()
-        previousOperation = Operation.Clear
+        previousOperation = Operation.Equals
         internalDescription = nil
     }
     

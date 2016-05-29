@@ -89,11 +89,11 @@
                                                         <rect key="frame" x="455" y="0.0" width="106" height="89"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                        <state key="normal" title="AC">
+                                                        <state key="normal" title="C">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E24-5H-wyF"/>
+                                                            <action selector="touchClear" destination="BYZ-38-t0r" eventType="touchUpInside" id="jwF-Zb-blG"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
