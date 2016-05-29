@@ -19,6 +19,9 @@ func doubleAsString(number: Double) -> String {
 class CalculatorBrain {
     
     private var accumulator = 0.0
+    private var internalProgram = [AnyObject]()
+    private var descriptionString: String?
+    private var previousOperation = Operation.Clear
     
     private var accumulatorString: String {
         get {
@@ -32,6 +35,7 @@ class CalculatorBrain {
     
     func setOperand(operand: Double) {
         accumulator = operand
+        internalProgram.append(operand)
     }
     
     private enum Operation {
@@ -60,6 +64,7 @@ class CalculatorBrain {
     ]
     
     func performOperation(symbol: String, userWasTyping: Bool) {
+        internalProgram.append(symbol)
         if let operation = operations[symbol] {
             updateDescription(symbol, userWasTyping: userWasTyping)
             switch operation {
@@ -73,8 +78,7 @@ class CalculatorBrain {
             case .Equals:
                 executePendingBinaryOperation()
             case .Clear:
-                accumulator = 0.0
-                descriptionString = nil
+                clear()
             }
         }
     }
@@ -99,7 +103,32 @@ class CalculatorBrain {
         }
     }
     
-    private var descriptionString: String?
+    private func clear() {
+        accumulator = 0.0
+        pending = nil
+        internalProgram.removeAll()
+        descriptionString = nil
+    }
+    
+    typealias PropertyList = AnyObject
+    
+    var program: PropertyList {
+        get {
+            return internalProgram
+        }
+        set {
+            clear()
+            if let arrayOfOps = newValue as? [AnyObject] {
+                for op in arrayOfOps {
+                    if let operand = op as? Double {
+                        setOperand(operand)
+                    } else if let operation = op as? String {
+                        performOperation(operation, userWasTyping: false)
+                    }
+                }
+            }
+        }
+    }
     
     private func appendStringToDescription(string: String, userWasTyping: Bool) {
         var userWasTypingOverride = userWasTyping
@@ -113,8 +142,6 @@ class CalculatorBrain {
             descriptionString! += " \(string)"
         }
     }
-    
-    private var previousOperation = Operation.Clear
     
     private func updateDescription(symbol: String, userWasTyping: Bool) {
         if let operation = operations[symbol] {
