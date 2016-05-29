@@ -19,7 +19,15 @@ func doubleAsString(number: Double) -> String {
 class CalculatorBrain {
     
     private var accumulator = 0.0
-    private var internalProgram = [AnyObject]()
+    private var internalProgram = [AnyObject]() {
+        didSet {
+            if let operation = oldValue.last as? String,
+              let operand = internalProgram.last as? Double
+              where operation == "=" {
+                internalProgram = [ operand ]
+            }
+        }
+    }
     private var internalDescription: String?
     private var previousOperation = Operation.Clear
     
@@ -35,11 +43,7 @@ class CalculatorBrain {
     
     func setOperand(operand: Double) {
         accumulator = operand
-        if case .Equals = previousOperation {
-            internalProgram.removeAll()
-        }
         internalProgram.append(operand)
-        NSLog("Program: \(internalProgram)")
     }
     
     private enum Operation {
@@ -69,7 +73,6 @@ class CalculatorBrain {
     
     func performOperation(symbol: String, userWasTyping: Bool) {
         internalProgram.append(symbol)
-        NSLog("Program: \(internalProgram)")
         if let operation = operations[symbol] {
             updateDescription(symbol, userWasTyping: userWasTyping)
             switch operation {
