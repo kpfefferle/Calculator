@@ -35,7 +35,11 @@ class CalculatorBrain {
     
     func setOperand(operand: Double) {
         accumulator = operand
+        if case .Equals = previousOperation {
+            internalProgram.removeAll()
+        }
         internalProgram.append(operand)
+        NSLog("Program: \(internalProgram)")
     }
     
     private enum Operation {
@@ -65,6 +69,7 @@ class CalculatorBrain {
     
     func performOperation(symbol: String, userWasTyping: Bool) {
         internalProgram.append(symbol)
+        NSLog("Program: \(internalProgram)")
         if let operation = operations[symbol] {
             updateDescription(symbol, userWasTyping: userWasTyping)
             switch operation {
