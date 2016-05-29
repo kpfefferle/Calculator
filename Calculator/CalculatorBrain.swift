@@ -103,13 +103,6 @@ class CalculatorBrain {
         }
     }
     
-    private func clear() {
-        accumulator = 0.0
-        pending = nil
-        internalProgram.removeAll()
-        descriptionString = nil
-    }
-    
     typealias PropertyList = AnyObject
     
     var program: PropertyList {
@@ -201,4 +194,12 @@ class CalculatorBrain {
         }
     }
 
+    private func clear() {
+        accumulator = 0.0
+        pending = nil
+        internalProgram.removeAll()
+        previousOperation = Operation.Clear
+        descriptionString = nil
+    }
+    
 }
