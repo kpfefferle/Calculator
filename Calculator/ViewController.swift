@@ -35,7 +35,9 @@ class ViewController: UIViewController {
             return Double(display.text!)!
         }
         set {
-            display.text = doubleAsString(newValue)
+            if let formattedString = formattedStringFromDouble(newValue) {
+                display.text = formattedString
+            }
         }
     }
     
@@ -66,6 +68,13 @@ class ViewController: UIViewController {
         } else {
             descriptionDisplay.text = " "
         }
+    }
+    
+    private func formattedStringFromDouble(number: Double) -> String? {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 6
+        return formatter.stringFromNumber(number)
     }
 }
 
