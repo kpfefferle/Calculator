@@ -20,7 +20,7 @@ class CalculatorBrain {
     
     private var accumulator = 0.0
     private var internalProgram = [AnyObject]()
-    private var descriptionString: String?
+    private var internalDescription: String?
     private var previousOperation = Operation.Clear
     
     private var accumulatorString: String {
@@ -128,11 +128,11 @@ class CalculatorBrain {
         if case .Constant = previousOperation {
             userWasTypingOverride = true
         }
-        if descriptionString == nil ||
+        if internalDescription == nil ||
           (!isPartialResult && userWasTypingOverride) {
-            descriptionString = string
+            internalDescription = string
         } else {
-            descriptionString! += " \(string)"
+            internalDescription! += " \(string)"
         }
     }
     
@@ -140,7 +140,7 @@ class CalculatorBrain {
         if let operation = operations[symbol] {
             switch operation {
             case .UnaryOperation:
-                let stringToWrap = (userWasTyping || descriptionString == nil) ? accumulatorString : descriptionString!
+                let stringToWrap = (userWasTyping || internalDescription == nil) ? accumulatorString : internalDescription!
                 var newDescriptionContent = ""
                 switch symbol {
                 case "x²":
@@ -153,7 +153,7 @@ class CalculatorBrain {
                 if userWasTyping {
                     appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
                 } else {
-                    descriptionString = newDescriptionContent
+                    internalDescription = newDescriptionContent
                 }
             case .BinaryOperation:
                 var newDescriptionContent = ""
@@ -184,7 +184,7 @@ class CalculatorBrain {
     
     var description: String? {
         get {
-            return descriptionString
+            return internalDescription
         }
     }
     
@@ -199,7 +199,7 @@ class CalculatorBrain {
         pending = nil
         internalProgram.removeAll()
         previousOperation = Operation.Clear
-        descriptionString = nil
+        internalDescription = nil
     }
     
 }
