@@ -86,9 +86,7 @@ class CalculatorBrain {
     }
 
     var isPartialResult: Bool {
-        get {
-            return pending != nil
-        }
+        return pending != nil
     }
     
     private func executePendingBinaryOperation() {
@@ -119,12 +117,6 @@ class CalculatorBrain {
     }
     
     var description: String? {
-        get {
-            return descriptionFromProgram()
-        }
-    }
-    
-    private func descriptionFromProgram() -> String? {
         guard !internalProgram.isEmpty else {
             return nil
         }
@@ -133,11 +125,11 @@ class CalculatorBrain {
         var lastOperand: Double?
         for item in internalProgram {
             if let operand = item as? Double,
-              let formattedOperand = formattedStringFromDouble(operand) {
+                let formattedOperand = formattedStringFromDouble(operand) {
                 descriptionElements.append(formattedOperand)
                 lastOperand = operand
             } else if let symbol = item as? String,
-              let operation = operations[symbol] {
+                let operation = operations[symbol] {
                 switch operation {
                 case .Constant:
                     descriptionElements.append(symbol)
@@ -147,7 +139,7 @@ class CalculatorBrain {
                         descriptionElements.removeLast()
                         descriptionElements.append(wrapContentWithSymbol(symbol, content: formattedOperand))
                     } else if let lastSymbol = lastItem as? String,
-                      let lastOperation = operations[lastSymbol] {
+                        let lastOperation = operations[lastSymbol] {
                         switch lastOperation {
                         case .UnaryOperation, .Equals:
                             let descriptionString = descriptionElements.joinWithSeparator(" ")
@@ -159,19 +151,19 @@ class CalculatorBrain {
                     }
                 case .BinaryOperation:
                     if let lastSymbol = lastItem as? String,
-                      let lastOperation = operations[lastSymbol],
-                      case .BinaryOperation = lastOperation,
-                      let lastOperand = lastOperand,
-                      let formattedLastOperand = formattedStringFromDouble(lastOperand) {
+                        let lastOperation = operations[lastSymbol],
+                        case .BinaryOperation = lastOperation,
+                        let lastOperand = lastOperand,
+                        let formattedLastOperand = formattedStringFromDouble(lastOperand) {
                         descriptionElements.append(formattedLastOperand)
                     }
                     descriptionElements.append(symbol)
                 case .Equals:
                     if let lastSymbol = lastItem as? String,
-                      let lastOperation = operations[lastSymbol],
-                      case .BinaryOperation = lastOperation,
-                      let lastOperand = lastOperand,
-                      let formattedLastOperand = formattedStringFromDouble(lastOperand) {
+                        let lastOperation = operations[lastSymbol],
+                        case .BinaryOperation = lastOperation,
+                        let lastOperand = lastOperand,
+                        let formattedLastOperand = formattedStringFromDouble(lastOperand) {
                         descriptionElements.append(formattedLastOperand)
                     }
                 }
@@ -193,9 +185,7 @@ class CalculatorBrain {
     }
     
     var result: Double {
-        get {
-            return accumulator
-        }
+        return accumulator
     }
 
     func clear() {
