@@ -191,33 +191,60 @@ class CalculatorBrain {
     }
     
     private func descriptionString() -> String {
-        var descriptionString = ""
+        var descriptionElements = [String]()
         var lastItem: AnyObject?
         var lastOperand: Double?
         for item in internalProgram {
             if let operand = item as? Double,
               let formattedOperand = formattedStringFromDouble(operand) {
-                descriptionString += "\(formattedOperand) "
+                descriptionElements.append(formattedOperand)
                 lastOperand = operand
             } else if let symbol = item as? String,
               let operation = operations[symbol] {
                 switch operation {
-                case .BinaryOperation, .Equals:
-                    if (lastItem as? String) != nil,
-                        let lastOperand = lastOperand,
-                        let formattedLastOperand = formattedStringFromDouble(lastOperand) {
-                        descriptionString += "\(formattedLastOperand) "
+                case .Constant:
+                    descriptionElements.append(symbol)
+                case .UnaryOperation:
+                    if let operation = lastItem as? String
+                      where operation == "=" {
+                        let descriptionString = descriptionElements.joinWithSeparator(" ")
+                        descriptionElements.append(wrapContentWithSymbol(symbol, content: descriptionString))
+                    } else if let operand = lastItem as? Double,
+                      let formattedOperand = formattedStringFromDouble(operand) {
+                        descriptionElements.removeLast()
+                        descriptionElements.append(wrapContentWithSymbol(symbol, content: formattedOperand))
                     }
-                    fallthrough
-                case .Constant, .BinaryOperation:
-                    descriptionString += "\(symbol) "
-                default:
-                    break
+                case .BinaryOperation, .Equals:
+                    if let lastOperation = lastItem as? String,
+                      let operation = operations[lastOperation],
+                      let lastOperand = lastOperand,
+                      let formattedLastOperand = formattedStringFromDouble(lastOperand) {
+                        switch operation {
+                        case .Constant, .UnaryOperation:
+                            break
+                        default:
+                            descriptionElements.append(formattedLastOperand)
+                        }
+                    }
+                    if case .BinaryOperation = operation {
+                        descriptionElements.append(symbol)
+                    }
                 }
             }
             lastItem = item
         }
-        return descriptionString.trim()
+        return descriptionElements.joinWithSeparator(" ")
+    }
+    
+    private func wrapContentWithSymbol(symbol: String, content: String) -> String {
+        switch symbol {
+        case "x²":
+            return "(\(content))²"
+        case "%":
+            return "(\(content))%"
+        default:
+            return "\(symbol)(\(content))"
+        }
     }
     
     var result: Double {
