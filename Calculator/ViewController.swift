@@ -30,12 +30,14 @@ class ViewController: UIViewController {
         }
     }
     
-    private var displayValue: Double {
+    private var displayValue: Double? {
         get {
-            return Double(display.text!)!
+            return Double(display.text!)
         }
         set {
-            if let formattedValue = formattedStringFromDouble(newValue) {
+            if newValue == nil {
+                display.text = "0"
+            } else if let formattedValue = formattedStringFromDouble(newValue!) {
                 display.text = formattedValue
             }
         }
@@ -44,7 +46,8 @@ class ViewController: UIViewController {
     private var brain = CalculatorBrain()
 
     @IBAction private func performOperation(sender: UIButton) {
-        if userIsTyping {
+        if let displayValue = displayValue
+          where userIsTyping {
             brain.setOperand(displayValue)
             userIsTyping = false
         }
