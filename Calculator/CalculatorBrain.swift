@@ -197,24 +197,24 @@ class CalculatorBrain {
         for item in internalProgram {
             if let operand = item as? Double,
               let formattedOperand = formattedStringFromDouble(operand) {
-                descriptionString += formattedOperand
+                descriptionString += "\(formattedOperand) "
                 lastOperand = operand
             } else if let symbol = item as? String,
               let operation = operations[symbol] {
                 switch operation {
-                case .Constant, .BinaryOperation:
-                    descriptionString += symbol
-                case .Equals:
+                case .BinaryOperation, .Equals:
                     if (lastItem as? String) != nil,
-                      let lastOperand = lastOperand,
-                      let formattedLastOperand = formattedStringFromDouble(lastOperand) {
-                        descriptionString += formattedLastOperand
+                        let lastOperand = lastOperand,
+                        let formattedLastOperand = formattedStringFromDouble(lastOperand) {
+                        descriptionString += "\(formattedLastOperand) "
                     }
+                    fallthrough
+                case .Constant, .BinaryOperation:
+                    descriptionString += "\(symbol) "
                 default:
                     break
                 }
             }
-            descriptionString += " "
             lastItem = item
         }
         return descriptionString.trim()
