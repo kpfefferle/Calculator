@@ -38,6 +38,10 @@ class CalculatorBrain {
         internalProgram.append(operand)
     }
     
+    func setOperand(variableName: String) {
+        internalProgram.append(variableName)
+    }
+    
     private enum Operation {
         case Constant(Double)
         case UnaryOperation((Double) -> Double)
