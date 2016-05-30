@@ -71,7 +71,7 @@ class CalculatorBrain {
         "=" : Operation.Equals
     ]
     
-    func performOperation(symbol: String, userWasTyping: Bool) {
+    func performOperation(symbol: String) {
         internalProgram.append(symbol)
         if let operation = operations[symbol] {
             switch operation {
@@ -121,7 +121,7 @@ class CalculatorBrain {
                     if let operand = op as? Double {
                         setOperand(operand)
                     } else if let operation = op as? String {
-                        performOperation(operation, userWasTyping: false)
+                        performOperation(operation)
                     }
                 }
             }

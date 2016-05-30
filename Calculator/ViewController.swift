@@ -50,7 +50,7 @@ class ViewController: UIViewController {
             userIsTyping = false
         }
         if let operation = sender.currentTitle {
-            brain.performOperation(operation, userWasTyping: userWasTyping)
+            brain.performOperation(operation)
         }
         updateLabels()
     }
