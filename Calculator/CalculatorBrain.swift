@@ -33,16 +33,6 @@ class CalculatorBrain {
         }
     }
     
-    private var accumulatorString: String {
-        get {
-            switch accumulator {
-            case M_PI: return "π"
-            case M_E: return "e"
-            default: return formattedStringFromDouble(accumulator)!
-            }
-        }
-    }
-    
     func setOperand(operand: Double) {
         accumulator = operand
         internalProgram.append(operand)
