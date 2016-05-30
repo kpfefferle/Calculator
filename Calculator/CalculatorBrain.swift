@@ -32,8 +32,6 @@ class CalculatorBrain {
             }
         }
     }
-    private var internalDescription: String?
-    private var previousOperation = Operation.Equals
     
     private var accumulatorString: String {
         get {
@@ -76,7 +74,6 @@ class CalculatorBrain {
     func performOperation(symbol: String, userWasTyping: Bool) {
         internalProgram.append(symbol)
         if let operation = operations[symbol] {
-            updateDescription(symbol, userWasTyping: userWasTyping)
             switch operation {
             case .Constant(let value):
                 accumulator = value
@@ -131,74 +128,16 @@ class CalculatorBrain {
         }
     }
     
-    private func appendStringToDescription(string: String, userWasTyping: Bool) {
-        var userWasTypingOverride = userWasTyping
-        if case .Constant = previousOperation {
-            userWasTypingOverride = true
-        }
-        if internalDescription == nil ||
-          (!isPartialResult && userWasTypingOverride) {
-            internalDescription = string
-        } else {
-            internalDescription! += " \(string)"
-        }
-    }
-    
-    private func updateDescription(symbol: String, userWasTyping: Bool) {
-        if let operation = operations[symbol] {
-            switch operation {
-            case .UnaryOperation:
-                let stringToWrap = (userWasTyping || internalDescription == nil) ? accumulatorString : internalDescription!
-                var newDescriptionContent = ""
-                switch symbol {
-                case "x²":
-                    newDescriptionContent = "(\(stringToWrap))²"
-                case "%":
-                    newDescriptionContent = "(\(stringToWrap))%"
-                default:
-                    newDescriptionContent = "\(symbol)(\(stringToWrap))"
-                }
-                if userWasTyping {
-                    appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
-                } else {
-                    internalDescription = newDescriptionContent
-                }
-            case .BinaryOperation:
-                var newDescriptionContent = ""
-                if userWasTyping {
-                    newDescriptionContent += "\(accumulatorString) "
-                } else if case .Constant = previousOperation {
-                    newDescriptionContent += "\(accumulatorString) "
-                }
-                newDescriptionContent += "\(symbol)"
-                appendStringToDescription(newDescriptionContent, userWasTyping: userWasTyping)
-            case .Equals:
-                switch previousOperation {
-                case .UnaryOperation, .Equals:
-                    if userWasTyping {
-                        fallthrough
-                    } else {
-                        break
-                    }
-                default:
-                    appendStringToDescription(accumulatorString, userWasTyping: userWasTyping)
-                }
-            default:
-                break
-            }
-            previousOperation = operation
-        }
-    }
-    
     var description: String? {
         get {
-            NSLog("internalDescription: \(internalDescription)")
-            NSLog("descriptionString: '\(descriptionString())'")
-            return internalDescription
+            return descriptionFromProgram()
         }
     }
     
-    private func descriptionString() -> String {
+    private func descriptionFromProgram() -> String? {
+        guard !internalProgram.isEmpty else {
+            return nil
+        }
         var descriptionElements = [String]()
         var lastItem: AnyObject?
         var lastOperand: Double?
@@ -213,29 +152,34 @@ class CalculatorBrain {
                 case .Constant:
                     descriptionElements.append(symbol)
                 case .UnaryOperation:
-                    if let operation = lastItem as? String
-                      where operation == "=" {
-                        let descriptionString = descriptionElements.joinWithSeparator(" ")
-                        descriptionElements.removeAll()
-                        descriptionElements.append(wrapContentWithSymbol(symbol, content: descriptionString))
-                    } else if let operand = lastItem as? Double,
-                      let formattedOperand = formattedStringFromDouble(operand) {
+                    if let operand = lastItem as? Double,
+                        let formattedOperand = formattedStringFromDouble(operand) {
                         descriptionElements.removeLast()
                         descriptionElements.append(wrapContentWithSymbol(symbol, content: formattedOperand))
+                    } else if let lastSymbol = lastItem as? String,
+                      let lastOperation = operations[lastSymbol] {
+                        switch lastOperation {
+                        case .UnaryOperation, .Equals:
+                            let descriptionString = descriptionElements.joinWithSeparator(" ")
+                            descriptionElements.removeAll()
+                            descriptionElements.append(wrapContentWithSymbol(symbol, content: descriptionString))
+                        default:
+                            break
+                        }
                     }
                 case .BinaryOperation:
-                    if let lastOperation = lastItem as? String,
-                      let operation = operations[lastOperation],
-                      case .BinaryOperation = operation,
+                    if let lastSymbol = lastItem as? String,
+                      let lastOperation = operations[lastSymbol],
+                      case .BinaryOperation = lastOperation,
                       let lastOperand = lastOperand,
                       let formattedLastOperand = formattedStringFromDouble(lastOperand) {
                         descriptionElements.append(formattedLastOperand)
                     }
                     descriptionElements.append(symbol)
                 case .Equals:
-                    if let lastOperation = lastItem as? String,
-                      let operation = operations[lastOperation],
-                      case .BinaryOperation = operation,
+                    if let lastSymbol = lastItem as? String,
+                      let lastOperation = operations[lastSymbol],
+                      case .BinaryOperation = lastOperation,
                       let lastOperand = lastOperand,
                       let formattedLastOperand = formattedStringFromDouble(lastOperand) {
                         descriptionElements.append(formattedLastOperand)
@@ -268,8 +212,6 @@ class CalculatorBrain {
         accumulator = 0.0
         pending = nil
         internalProgram.removeAll()
-        previousOperation = Operation.Equals
-        internalDescription = nil
     }
     
     private func formattedStringFromDouble(number: Double) -> String? {
