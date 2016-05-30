@@ -30,6 +30,16 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func touchBackspace() {
+        if let currentDisplay = display.text {
+            if currentDisplay.characters.count > 1 {
+                display.text = String(currentDisplay.characters.dropLast())
+            } else {
+                display.text = "0"
+            }
+        }
+    }
+    
     private var displayValue: Double? {
         get {
             return Double(display.text!)
