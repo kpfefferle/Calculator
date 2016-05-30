@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func touchBackspace() {
+    @IBAction private func touchBackspace() {
         if let currentDisplay = display.text {
             if currentDisplay.characters.count > 1 {
                 display.text = String(currentDisplay.characters.dropLast())
@@ -67,7 +67,7 @@ class ViewController: UIViewController {
         updateLabels()
     }
     
-    @IBAction func touchClear() {
+    @IBAction private func touchClear() {
         brain.clear()
         updateLabels()
     }
