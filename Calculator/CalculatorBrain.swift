@@ -39,10 +39,15 @@ class CalculatorBrain {
     }
     
     func setOperand(variableName: String) {
+        accumulator = variableValues[variableName] ?? 0.0
         internalProgram.append(variableName)
     }
     
-    var variableValues: [String:Double] = [:]
+    var variableValues: [String:Double] = [:] {
+        didSet {
+            program = internalProgram
+        }
+    }
     
     private enum Operation {
         case Constant(Double)
@@ -114,8 +119,12 @@ class CalculatorBrain {
                 for op in arrayOfOps {
                     if let operand = op as? Double {
                         setOperand(operand)
-                    } else if let operation = op as? String {
-                        performOperation(operation)
+                    } else if let symbol = op as? String {
+                        if operations[symbol] != nil {
+                            performOperation(symbol)
+                        } else {
+                            setOperand(variableValues[symbol] ?? 0.0)
+                        }
                     }
                 }
             }
