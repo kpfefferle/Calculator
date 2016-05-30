@@ -92,5 +92,9 @@ class ViewController: UIViewController {
         formatter.maximumFractionDigits = 6
         return formatter.stringFromNumber(number)
     }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.All
+    }
 }
 
