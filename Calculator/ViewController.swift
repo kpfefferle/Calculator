@@ -44,7 +44,6 @@ class ViewController: UIViewController {
     private var brain = CalculatorBrain()
 
     @IBAction private func performOperation(sender: UIButton) {
-        let userWasTyping = userIsTyping
         if userIsTyping {
             brain.setOperand(displayValue)
             userIsTyping = false
