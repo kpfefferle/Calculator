@@ -124,49 +124,59 @@ class CalculatorBrain {
         var lastItem: AnyObject?
         var lastOperand: Double?
         for item in internalProgram {
-            if let operand = item as? Double,
-                let formattedOperand = formattedStringFromDouble(operand) {
-                descriptionElements.append(formattedOperand)
-                lastOperand = operand
-            } else if let symbol = item as? String,
-                let operation = operations[symbol] {
-                switch operation {
-                case .Constant:
-                    descriptionElements.append(symbol)
-                case .UnaryOperation:
-                    if let operand = lastItem as? Double,
-                        let formattedOperand = formattedStringFromDouble(operand) {
-                        descriptionElements.removeLast()
-                        descriptionElements.append(wrapContentWithSymbol(symbol, content: formattedOperand))
-                    } else if let lastSymbol = lastItem as? String,
-                        let lastOperation = operations[lastSymbol] {
-                        switch lastOperation {
-                        case .UnaryOperation, .Equals:
-                            let descriptionString = descriptionElements.joinWithSeparator(" ")
-                            descriptionElements.removeAll()
-                            descriptionElements.append(wrapContentWithSymbol(symbol, content: descriptionString))
+            switch item {
+            case let operand as Double:
+                if let formattedOperand = formattedStringFromDouble(operand) {
+                    descriptionElements.append(formattedOperand)
+                    lastOperand = operand
+                }
+            case let symbol as String:
+                if let operation = operations[symbol] {
+                    switch operation {
+                    case .Constant:
+                        descriptionElements.append(symbol)
+                    case .UnaryOperation:
+                        switch lastItem {
+                        case let prevOperand as Double:
+                            if let formattedPrevOperand = formattedStringFromDouble(prevOperand) {
+                                descriptionElements.removeLast()
+                                descriptionElements.append(wrapContentWithSymbol(symbol, content: formattedPrevOperand))
+                            }
+                        case let prevSymbol as String:
+                            if let lastOperation = operations[prevSymbol] {
+                                switch lastOperation {
+                                case .UnaryOperation, .Equals:
+                                    let descriptionString = descriptionElements.joinWithSeparator(" ")
+                                    descriptionElements.removeAll()
+                                    descriptionElements.append(wrapContentWithSymbol(symbol, content: descriptionString))
+                                default:
+                                    break
+                                }
+                            }
                         default:
                             break
                         }
-                    }
-                case .BinaryOperation:
-                    if let lastSymbol = lastItem as? String,
-                        let lastOperation = operations[lastSymbol],
-                        case .BinaryOperation = lastOperation,
-                        let lastOperand = lastOperand,
-                        let formattedLastOperand = formattedStringFromDouble(lastOperand) {
-                        descriptionElements.append(formattedLastOperand)
-                    }
-                    descriptionElements.append(symbol)
-                case .Equals:
-                    if let lastSymbol = lastItem as? String,
-                        let lastOperation = operations[lastSymbol],
-                        case .BinaryOperation = lastOperation,
-                        let lastOperand = lastOperand,
-                        let formattedLastOperand = formattedStringFromDouble(lastOperand) {
-                        descriptionElements.append(formattedLastOperand)
+                    case .BinaryOperation:
+                        if let lastSymbol = lastItem as? String,
+                          let lastOperation = operations[lastSymbol],
+                          case .BinaryOperation = lastOperation,
+                          let lastOperand = lastOperand,
+                          let formattedLastOperand = formattedStringFromDouble(lastOperand) {
+                            descriptionElements.append(formattedLastOperand)
+                        }
+                        descriptionElements.append(symbol)
+                    case .Equals:
+                        if let lastSymbol = lastItem as? String,
+                          let lastOperation = operations[lastSymbol],
+                          case .BinaryOperation = lastOperation,
+                          let lastOperand = lastOperand,
+                          let formattedLastOperand = formattedStringFromDouble(lastOperand) {
+                            descriptionElements.append(formattedLastOperand)
+                        }
                     }
                 }
+            default:
+                break
             }
             lastItem = item
         }
