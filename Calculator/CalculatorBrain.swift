@@ -13,9 +13,17 @@ class CalculatorBrain {
     private var accumulator = 0.0
     private var internalProgram = [AnyObject]() {
         didSet {
-            if let operation = oldValue.last as? String,
-              let operand = internalProgram.last as? Double
-              where operation == "=" {
+            var mutableOldValue = oldValue
+            if let operand = internalProgram.last as? Double,
+              let symbol = oldValue.last as? String
+              where symbol == "=" {
+                internalProgram = [ operand ]
+            } else if let operand = internalProgram.last as? Double,
+              let symbol = mutableOldValue.popLast() as? String,
+              let operation = operations[symbol],
+              case .UnaryOperation = operation,
+              let prevSymbol = mutableOldValue.popLast() as? String
+              where prevSymbol == "=" {
                 internalProgram = [ operand ]
             } else if let previousOp = oldValue.last as? String,
               let newOp = internalProgram.last as? String
@@ -208,26 +216,29 @@ class CalculatorBrain {
                     if let operation = lastItem as? String
                       where operation == "=" {
                         let descriptionString = descriptionElements.joinWithSeparator(" ")
+                        descriptionElements.removeAll()
                         descriptionElements.append(wrapContentWithSymbol(symbol, content: descriptionString))
                     } else if let operand = lastItem as? Double,
                       let formattedOperand = formattedStringFromDouble(operand) {
                         descriptionElements.removeLast()
                         descriptionElements.append(wrapContentWithSymbol(symbol, content: formattedOperand))
                     }
-                case .BinaryOperation, .Equals:
+                case .BinaryOperation:
                     if let lastOperation = lastItem as? String,
                       let operation = operations[lastOperation],
+                      case .BinaryOperation = operation,
                       let lastOperand = lastOperand,
                       let formattedLastOperand = formattedStringFromDouble(lastOperand) {
-                        switch operation {
-                        case .Constant, .UnaryOperation:
-                            break
-                        default:
-                            descriptionElements.append(formattedLastOperand)
-                        }
+                        descriptionElements.append(formattedLastOperand)
                     }
-                    if case .BinaryOperation = operation {
-                        descriptionElements.append(symbol)
+                    descriptionElements.append(symbol)
+                case .Equals:
+                    if let lastOperation = lastItem as? String,
+                      let operation = operations[lastOperation],
+                      case .BinaryOperation = operation,
+                      let lastOperand = lastOperand,
+                      let formattedLastOperand = formattedStringFromDouble(lastOperand) {
+                        descriptionElements.append(formattedLastOperand)
                     }
                 }
             }
