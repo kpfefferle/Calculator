@@ -117,7 +117,7 @@ class CalculatorBrain {
     }
     
     var description: String? {
-        guard !internalProgram.isEmpty else {
+        if internalProgram.isEmpty {
             return nil
         }
         var descriptionElements = [String]()
