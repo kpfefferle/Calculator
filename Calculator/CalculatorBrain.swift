@@ -42,6 +42,8 @@ class CalculatorBrain {
         internalProgram.append(variableName)
     }
     
+    var variableValues: [String:Double]
+    
     private enum Operation {
         case Constant(Double)
         case UnaryOperation((Double) -> Double)
