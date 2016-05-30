@@ -40,6 +40,10 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func touchRand() {
+        displayValue = Double(arc4random()) / 0xFFFFFFFF
+    }
+    
     private var displayValue: Double? {
         get {
             return Double(display.text!)
