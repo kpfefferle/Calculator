@@ -13,6 +13,7 @@
 		0A0AAFEB1CF252E400EFCA8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A0AAFEA1CF252E400EFCA8E /* Assets.xcassets */; };
 		0A0AAFEE1CF252E400EFCA8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A0AAFEC1CF252E400EFCA8E /* LaunchScreen.storyboard */; };
 		0A0AAFF71CF2972A00EFCA8E /* CalculatorBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */; };
+		0A2244371CFBBED500585629 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2244361CFBBED500585629 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		0A0AAFED1CF252E400EFCA8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A0AAFEF1CF252E400EFCA8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
+		0A2244361CFBBED500585629 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				0A0AAFEA1CF252E400EFCA8E /* Assets.xcassets */,
 				0A0AAFEC1CF252E400EFCA8E /* LaunchScreen.storyboard */,
 				0A0AAFEF1CF252E400EFCA8E /* Info.plist */,
+				0A2244361CFBBED500585629 /* Utils.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 				0A0AAFF71CF2972A00EFCA8E /* CalculatorBrain.swift in Sources */,
 				0A0AAFE61CF252E400EFCA8E /* ViewController.swift in Sources */,
 				0A0AAFE41CF252E400EFCA8E /* AppDelegate.swift in Sources */,
+				0A2244371CFBBED500585629 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +307,7 @@
 				0A0AAFF41CF252E400EFCA8E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -35,8 +35,8 @@ class ViewController: UIViewController {
             return Double(display.text!)!
         }
         set {
-            if let formattedString = formattedStringFromDouble(newValue) {
-                display.text = formattedString
+            if let formattedValue = formattedStringFromDouble(newValue) {
+                display.text = formattedValue
             }
         }
     }

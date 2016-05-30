@@ -8,14 +8,6 @@
 
 import Foundation
 
-func doubleAsString(number: Double) -> String {
-    if number == Double(Int(number)) {
-        return String(Int(number))
-    } else {
-        return String(number)
-    }
-}
-
 class CalculatorBrain {
     
     private var accumulator = 0.0
@@ -25,6 +17,10 @@ class CalculatorBrain {
               let operand = internalProgram.last as? Double
               where operation == "=" {
                 internalProgram = [ operand ]
+            } else if let previousOp = oldValue.last as? String,
+              let newOp = internalProgram.last as? String
+              where previousOp == "=" && newOp == "=" {
+                internalProgram = oldValue
             }
         }
     }
@@ -36,7 +32,7 @@ class CalculatorBrain {
             switch accumulator {
             case M_PI: return "π"
             case M_E: return "e"
-            default: return doubleAsString(accumulator)
+            default: return formattedStringFromDouble(accumulator)!
             }
         }
     }
@@ -188,8 +184,40 @@ class CalculatorBrain {
     
     var description: String? {
         get {
+            NSLog("internalDescription: \(internalDescription)")
+            NSLog("descriptionString: '\(descriptionString())'")
             return internalDescription
         }
+    }
+    
+    private func descriptionString() -> String {
+        var descriptionString = ""
+        var lastItem: AnyObject?
+        var lastOperand: Double?
+        for item in internalProgram {
+            if let operand = item as? Double,
+              let formattedOperand = formattedStringFromDouble(operand) {
+                descriptionString += formattedOperand
+                lastOperand = operand
+            } else if let symbol = item as? String,
+              let operation = operations[symbol] {
+                switch operation {
+                case .Constant, .BinaryOperation:
+                    descriptionString += symbol
+                case .Equals:
+                    if (lastItem as? String) != nil,
+                      let lastOperand = lastOperand,
+                      let formattedLastOperand = formattedStringFromDouble(lastOperand) {
+                        descriptionString += formattedLastOperand
+                    }
+                default:
+                    break
+                }
+            }
+            descriptionString += " "
+            lastItem = item
+        }
+        return descriptionString.trim()
     }
     
     var result: Double {
@@ -206,4 +234,11 @@ class CalculatorBrain {
         internalDescription = nil
     }
     
+    private func formattedStringFromDouble(number: Double) -> String? {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 6
+        return formatter.stringFromNumber(number)
+    }
+
 }
