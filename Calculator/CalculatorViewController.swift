@@ -40,17 +40,17 @@ class CalculatorViewController: UIViewController {
         }
     }
     
-    @IBAction func touchRand() {
+    @IBAction private func touchRand() {
         displayValue = Double(arc4random()) / 0xFFFFFFFF
     }
     
-    @IBAction func setVariable() {
+    @IBAction private func setVariable() {
         brain.variableValues["M"] = displayValue
         userIsTyping = false
         updateLabels()
     }
     
-    @IBAction func useVariable() {
+    @IBAction private func useVariable() {
         brain.setOperand("M")
         updateLabels()
     }
