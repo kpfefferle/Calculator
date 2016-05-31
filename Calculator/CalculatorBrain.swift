@@ -189,6 +189,8 @@ class CalculatorBrain {
                             descriptionElements.append(formattedLastOperand)
                         }
                     }
+                } else {
+                    descriptionElements.append(symbol)
                 }
             default:
                 break
