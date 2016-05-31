@@ -44,6 +44,16 @@ class CalculatorViewController: UIViewController {
         displayValue = Double(arc4random()) / 0xFFFFFFFF
     }
     
+    @IBAction func setVariable() {
+        brain.variableValues["M"] = displayValue
+        updateLabels()
+    }
+    
+    @IBAction func useVariable() {
+        brain.setOperand("M")
+        updateLabels()
+    }
+    
     private var displayValue: Double? {
         get {
             return Double(display.text!)
