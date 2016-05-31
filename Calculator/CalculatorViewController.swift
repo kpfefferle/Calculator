@@ -46,6 +46,7 @@ class CalculatorViewController: UIViewController {
     
     @IBAction func setVariable() {
         brain.variableValues["M"] = displayValue
+        userIsTyping = false
         updateLabels()
     }
     
