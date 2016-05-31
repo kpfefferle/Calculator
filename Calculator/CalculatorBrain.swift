@@ -123,7 +123,7 @@ class CalculatorBrain {
                         if operations[symbol] != nil {
                             performOperation(symbol)
                         } else {
-                            setOperand(variableValues[symbol] ?? 0.0)
+                            setOperand(symbol)
                         }
                     }
                 }
