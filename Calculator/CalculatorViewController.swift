@@ -30,12 +30,16 @@ class CalculatorViewController: UIViewController {
         }
     }
     
-    @IBAction private func touchBackspace() {
+    @IBAction private func touchUndo() {
         if let currentDisplay = display.text {
             if currentDisplay.characters.count > 1 {
                 display.text = String(currentDisplay.characters.dropLast())
-            } else {
+            } else if currentDisplay != "0" {
                 display.text = "0"
+            } else if var brainProgram = brain.program as? [AnyObject] {
+                brainProgram.removeLast()
+                brain.program = brainProgram
+                updateLabels()
             }
         }
     }
