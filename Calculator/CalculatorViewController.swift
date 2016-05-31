@@ -83,6 +83,7 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction private func touchClear() {
+        brain.variableValues.removeValueForKey("M")
         brain.clear()
         updateLabels()
     }
