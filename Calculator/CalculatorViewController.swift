@@ -109,8 +109,5 @@ class CalculatorViewController: UIViewController {
         return formatter.stringFromNumber(number)
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.All
-    }
 }
 
