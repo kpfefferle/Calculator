@@ -114,6 +114,10 @@ class CalculatorViewController: UIViewController {
 
     // MARK: - Navigation
 
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        return !brain.isPartialResult && brain.description != nil
+    }
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var destinationVC = segue.destinationViewController
         if let navcon = destinationVC as? UINavigationController {
