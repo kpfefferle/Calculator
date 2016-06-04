@@ -14,6 +14,7 @@
 		0A0AAFEE1CF252E400EFCA8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A0AAFEC1CF252E400EFCA8E /* LaunchScreen.storyboard */; };
 		0A0AAFF71CF2972A00EFCA8E /* CalculatorBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */; };
 		0A6CFB561D0380150086F17A /* AxesDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6CFB551D0380150086F17A /* AxesDrawer.swift */; };
+		0A6CFB581D03825B0086F17A /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6CFB571D03825B0086F17A /* GraphViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		0A0AAFEF1CF252E400EFCA8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
 		0A6CFB551D0380150086F17A /* AxesDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxesDrawer.swift; sourceTree = "<group>"; };
+		0A6CFB571D03825B0086F17A /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */,
 				0A0AAFE51CF252E400EFCA8E /* CalculatorViewController.swift */,
+				0A6CFB571D03825B0086F17A /* GraphViewController.swift */,
 				0A0AAFE71CF252E400EFCA8E /* Main.storyboard */,
 				0A6CFB551D0380150086F17A /* AxesDrawer.swift */,
 				0A0AAFF51CF255E400EFCA8E /* Supporting Files */,
@@ -151,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A0AAFF71CF2972A00EFCA8E /* CalculatorBrain.swift in Sources */,
+				0A6CFB581D03825B0086F17A /* GraphViewController.swift in Sources */,
 				0A6CFB561D0380150086F17A /* AxesDrawer.swift in Sources */,
 				0A0AAFE61CF252E400EFCA8E /* CalculatorViewController.swift in Sources */,
 				0A0AAFE41CF252E400EFCA8E /* AppDelegate.swift in Sources */,
