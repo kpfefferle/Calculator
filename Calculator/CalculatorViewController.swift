@@ -9,11 +9,53 @@
 import UIKit
 
 class CalculatorViewController: UIViewController {
+    
+    // MARK: Model
+    
+    private var brain = CalculatorBrain()
+    
+    @IBAction private func setVariable() {
+        brain.variableValues["M"] = displayValue
+        userIsTyping = false
+        updateUI()
+    }
+    
+    @IBAction private func useVariable() {
+        brain.setOperand("M")
+        updateUI()
+    }
+    
+    @IBAction private func touchClear() {
+        brain.variableValues.removeValueForKey("M")
+        brain.clear()
+        updateUI()
+    }
+    
+    // MARK: View
 
     @IBOutlet private weak var display: UILabel!
     @IBOutlet private weak var descriptionDisplay: UILabel!
     
     private var userIsTyping = false
+    private var displayValue: Double? {
+        get {
+            return Double(display.text!)
+        }
+        set {
+            if newValue == nil {
+                display.text = "0"
+            } else if let formattedValue = formattedStringFromDouble(newValue!) {
+                display.text = formattedValue
+            }
+        }
+    }
+
+    private func formattedStringFromDouble(number: Double) -> String? {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 6
+        return formatter.stringFromNumber(number)
+    }
 
     @IBAction private func touchDigit(sender: UIButton) {
         if let digit = sender.currentTitle,
@@ -39,7 +81,7 @@ class CalculatorViewController: UIViewController {
             } else if var brainProgram = brain.program as? [AnyObject] {
                 brainProgram.removeLast()
                 brain.program = brainProgram
-                updateLabels()
+                updateUI()
             }
         }
     }
@@ -48,32 +90,6 @@ class CalculatorViewController: UIViewController {
         displayValue = Double(arc4random()) / 0xFFFFFFFF
     }
     
-    @IBAction private func setVariable() {
-        brain.variableValues["M"] = displayValue
-        userIsTyping = false
-        updateLabels()
-    }
-    
-    @IBAction private func useVariable() {
-        brain.setOperand("M")
-        updateLabels()
-    }
-    
-    private var displayValue: Double? {
-        get {
-            return Double(display.text!)
-        }
-        set {
-            if newValue == nil {
-                display.text = "0"
-            } else if let formattedValue = formattedStringFromDouble(newValue!) {
-                display.text = formattedValue
-            }
-        }
-    }
-    
-    private var brain = CalculatorBrain()
-
     @IBAction private func performOperation(sender: UIButton) {
         if let displayValue = displayValue
           where userIsTyping {
@@ -83,16 +99,10 @@ class CalculatorViewController: UIViewController {
         if let operation = sender.currentTitle {
             brain.performOperation(operation)
         }
-        updateLabels()
+        updateUI()
     }
     
-    @IBAction private func touchClear() {
-        brain.variableValues.removeValueForKey("M")
-        brain.clear()
-        updateLabels()
-    }
-
-    private func updateLabels() {
+    private func updateUI() {
         displayValue = brain.result
         if var newDescription = brain.description {
             newDescription += brain.isPartialResult ? " ..." : " ="
@@ -100,13 +110,6 @@ class CalculatorViewController: UIViewController {
         } else {
             descriptionDisplay.text = " "
         }
-    }
-    
-    private func formattedStringFromDouble(number: Double) -> String? {
-        let formatter = NSNumberFormatter()
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 6
-        return formatter.stringFromNumber(number)
     }
     
 }
