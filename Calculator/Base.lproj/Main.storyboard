@@ -416,10 +416,10 @@
             </objects>
             <point key="canvasLocation" x="1321" y="526"/>
         </scene>
-        <!--Split View Controller-->
+        <!--Global Split View Controller-->
         <scene sceneID="SaH-Ko-5k6">
             <objects>
-                <splitViewController id="Wcv-37-bG8" sceneMemberID="viewController">
+                <splitViewController id="Wcv-37-bG8" customClass="GlobalSplitViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="1AK-JF-TPJ" kind="relationship" relationship="masterViewController" id="fi4-gp-HDr"/>
                         <segue destination="Cjw-up-vwC" kind="relationship" relationship="detailViewController" id="h5H-34-9Rw"/>
@@ -486,6 +486,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="GBd-JR-9Ko"/>
+        <segue reference="h5H-34-9Rw"/>
     </inferredMetricsTieBreakers>
 </document>
