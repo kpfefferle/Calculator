@@ -429,7 +429,7 @@
             </objects>
             <point key="canvasLocation" x="-259" y="901"/>
         </scene>
-        <!--Graph-->
+        <!--Graph View Controller-->
         <scene sceneID="K5B-5M-hdO">
             <objects>
                 <viewController id="uPs-R7-KX8" customClass="GraphViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
@@ -442,7 +442,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Graph" id="S9Y-br-pqk"/>
+                    <navigationItem key="navigationItem" id="S9Y-br-pqk"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y9e-JG-BYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -486,6 +486,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="h5H-34-9Rw"/>
+        <segue reference="GBd-JR-9Ko"/>
     </inferredMetricsTieBreakers>
 </document>

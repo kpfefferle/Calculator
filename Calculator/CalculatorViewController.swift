@@ -111,6 +111,20 @@ class CalculatorViewController: UIViewController {
             descriptionDisplay.text = " "
         }
     }
+
+    // MARK: - Navigation
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var destinationVC = segue.destinationViewController
+        if let navcon = destinationVC as? UINavigationController {
+            destinationVC = navcon.visibleViewController ?? destinationVC
+        }
+        if let graphVC = destinationVC as? GraphViewController,
+          let identifier = segue.identifier
+          where identifier == "showGraphSegue" {
+            graphVC.navigationItem.title = brain.description
+        }
+    }
     
 }
 
