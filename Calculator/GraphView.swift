@@ -10,12 +10,13 @@ import UIKit
 
 class GraphView: UIView {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect) {
-        // Drawing code
+
+        let origin = CGPoint(x: bounds.midX, y: bounds.midY)
+
+        let axesDrawer = AxesDrawer(contentScaleFactor: contentScaleFactor)
+        axesDrawer.drawAxesInRect(bounds, origin: origin, pointsPerUnit: contentScaleFactor)
+
     }
-    */
 
 }
