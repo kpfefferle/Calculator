@@ -16,6 +16,7 @@
 		0A6CFB561D0380150086F17A /* AxesDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6CFB551D0380150086F17A /* AxesDrawer.swift */; };
 		0A6CFB581D03825B0086F17A /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6CFB571D03825B0086F17A /* GraphViewController.swift */; };
 		0A6CFB5A1D038A290086F17A /* GlobalSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6CFB591D038A290086F17A /* GlobalSplitViewController.swift */; };
+		0A6CFB5E1D04E0F50086F17A /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6CFB5D1D04E0F50086F17A /* GraphView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0A6CFB551D0380150086F17A /* AxesDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxesDrawer.swift; sourceTree = "<group>"; };
 		0A6CFB571D03825B0086F17A /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		0A6CFB591D038A290086F17A /* GlobalSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalSplitViewController.swift; sourceTree = "<group>"; };
+		0A6CFB5D1D04E0F50086F17A /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 			children = (
 				0A0AAFE71CF252E400EFCA8E /* Main.storyboard */,
 				0A6CFB5B1D04E0210086F17A /* View Controllers */,
+				0A6CFB5F1D04E1000086F17A /* Views */,
 				0A6CFB5C1D04E0440086F17A /* Library */,
 				0A0AAFF51CF255E400EFCA8E /* Supporting Files */,
 			);
@@ -98,6 +101,14 @@
 				0A6CFB551D0380150086F17A /* AxesDrawer.swift */,
 			);
 			name = Library;
+			sourceTree = "<group>";
+		};
+		0A6CFB5F1D04E1000086F17A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0A6CFB5D1D04E0F50086F17A /* GraphView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,6 +185,7 @@
 			files = (
 				0A0AAFF71CF2972A00EFCA8E /* CalculatorBrain.swift in Sources */,
 				0A6CFB581D03825B0086F17A /* GraphViewController.swift in Sources */,
+				0A6CFB5E1D04E0F50086F17A /* GraphView.swift in Sources */,
 				0A6CFB561D0380150086F17A /* AxesDrawer.swift in Sources */,
 				0A0AAFE61CF252E400EFCA8E /* CalculatorViewController.swift in Sources */,
 				0A6CFB5A1D038A290086F17A /* GlobalSplitViewController.swift in Sources */,
