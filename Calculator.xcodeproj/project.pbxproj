@@ -62,12 +62,9 @@
 		0A0AAFE21CF252E400EFCA8E /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				0A6CFB591D038A290086F17A /* GlobalSplitViewController.swift */,
-				0A0AAFE51CF252E400EFCA8E /* CalculatorViewController.swift */,
-				0A6CFB571D03825B0086F17A /* GraphViewController.swift */,
-				0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */,
-				0A6CFB551D0380150086F17A /* AxesDrawer.swift */,
 				0A0AAFE71CF252E400EFCA8E /* Main.storyboard */,
+				0A6CFB5B1D04E0210086F17A /* View Controllers */,
+				0A6CFB5C1D04E0440086F17A /* Library */,
 				0A0AAFF51CF255E400EFCA8E /* Supporting Files */,
 			);
 			path = Calculator;
@@ -82,6 +79,25 @@
 				0A0AAFEF1CF252E400EFCA8E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0A6CFB5B1D04E0210086F17A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0A6CFB591D038A290086F17A /* GlobalSplitViewController.swift */,
+				0A0AAFE51CF252E400EFCA8E /* CalculatorViewController.swift */,
+				0A6CFB571D03825B0086F17A /* GraphViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		0A6CFB5C1D04E0440086F17A /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				0A0AAFF61CF2972A00EFCA8E /* CalculatorBrain.swift */,
+				0A6CFB551D0380150086F17A /* AxesDrawer.swift */,
+			);
+			name = Library;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
