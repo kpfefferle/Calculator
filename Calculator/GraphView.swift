@@ -20,8 +20,14 @@ class GraphView: UIView {
     @IBInspectable
     var scale: CGFloat = 50.0 { didSet { setNeedsDisplay() } }
     
+    private var setOrigin: CGPoint? { didSet { setNeedsDisplay() } }
     var origin: CGPoint {
-        return CGPoint(x: bounds.midX, y: bounds.midY)
+        get {
+            return setOrigin ?? CGPoint(x: bounds.midX, y: bounds.midY)
+        }
+        set {
+            setOrigin = newValue
+        }
     }
     var program: CalculatorBrain.PropertyList {
         get {
@@ -42,8 +48,20 @@ class GraphView: UIView {
         }
     }
 
-    func resetScale() {
+    func changeOrigin(recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .Changed, .Ended:
+            let translation = recognizer.translationInView(self)
+            origin = CGPoint(x: origin.x + translation.x, y: origin.y + translation.y)
+            recognizer.setTranslation(CGPointZero, inView: self)
+        default:
+            break
+        }
+    }
+
+    func reset() {
         scale = 50.0
+        origin = CGPoint(x: bounds.midX, y: bounds.midY)
     }
 
     private func drawAxes() {

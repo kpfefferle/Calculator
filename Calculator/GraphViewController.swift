@@ -17,11 +17,14 @@ class GraphViewController: UIViewController {
             graphView.addGestureRecognizer(UIPinchGestureRecognizer(
                 target: graphView, action: #selector(GraphView.changeScale(_:))
             ))
-            let doubleTapGestureRecognizer = UITapGestureRecognizer(
-                target: graphView, action: #selector(GraphView.resetScale)
+            graphView.addGestureRecognizer(UIPanGestureRecognizer(
+                target: graphView, action: #selector(GraphView.changeOrigin(_:))
+            ))
+            let doubleTapRecognizer = UITapGestureRecognizer(
+                target: graphView, action: #selector(GraphView.reset)
             )
-            doubleTapGestureRecognizer.numberOfTapsRequired = 2
-            graphView.addGestureRecognizer(doubleTapGestureRecognizer)
+            doubleTapRecognizer.numberOfTapsRequired = 2
+            graphView.addGestureRecognizer(doubleTapRecognizer)
             updateUI()
         }
     }
