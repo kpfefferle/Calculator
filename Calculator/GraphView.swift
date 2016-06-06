@@ -13,12 +13,13 @@ class GraphView: UIView {
 
     private let brain = CalculatorBrain()
 
-    var color = UIColor.redColor()
-    var lineWidth: CGFloat = 1.0
+    @IBInspectable var graphColor: UIColor = .redColor()
+    @IBInspectable var graphLine: CGFloat = 1.0
+    @IBInspectable var scale: CGFloat = 50.0 // points per unit
+    
     var origin: CGPoint {
         return CGPoint(x: bounds.midX, y: bounds.midY)
     }
-    var scale: CGFloat = 50.0 // points per unit
     var program: CalculatorBrain.PropertyList {
         get {
             return brain.program
@@ -68,8 +69,8 @@ class GraphView: UIView {
             y = newY
         }
 
-        color.setStroke()
-        path.lineWidth = lineWidth
+        graphColor.setStroke()
+        path.lineWidth = graphLine
         path.stroke()
     }
 
