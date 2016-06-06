@@ -8,6 +8,7 @@
 
 import UIKit
 
+@IBDesignable
 class GraphView: UIView {
 
     private let brain = CalculatorBrain()
