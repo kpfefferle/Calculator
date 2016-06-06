@@ -14,11 +14,11 @@ class GraphView: UIView {
     private let brain = CalculatorBrain()
 
     @IBInspectable
-    var graphColor: UIColor = .redColor()
+    var graphColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
     @IBInspectable
-    var graphLine: CGFloat = 1.0
+    var graphLine: CGFloat = 1.0 { didSet { setNeedsDisplay() } }
     @IBInspectable
-    var scale: CGFloat = 50.0 // points per unit
+    var scale: CGFloat = 50.0 { didSet { setNeedsDisplay() } }
     
     var origin: CGPoint {
         return CGPoint(x: bounds.midX, y: bounds.midY)
