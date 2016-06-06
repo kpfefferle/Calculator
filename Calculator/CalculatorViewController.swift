@@ -127,6 +127,7 @@ class CalculatorViewController: UIViewController {
           let identifier = segue.identifier
           where identifier == "showGraphSegue" {
             graphVC.navigationItem.title = brain.description
+            graphVC.program = brain.program
         }
     }
     

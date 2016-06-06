@@ -10,4 +10,22 @@ import UIKit
 
 class GraphViewController: UIViewController {
 
+    var program: CalculatorBrain.PropertyList = [] {
+        didSet {
+            updateUI()
+        }
+    }
+
+    @IBOutlet weak var graphView: GraphView! {
+        didSet {
+            updateUI()
+        }
+    }
+
+    private func updateUI() {
+        if graphView != nil {
+            graphView.program = program
+        }
+    }
+
 }

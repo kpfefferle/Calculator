@@ -455,6 +455,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="S9Y-br-pqk"/>
+                    <connections>
+                        <outlet property="graphView" destination="zwT-pl-qdQ" id="wWI-wf-ndM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y9e-JG-BYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
