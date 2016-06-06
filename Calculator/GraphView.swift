@@ -42,6 +42,10 @@ class GraphView: UIView {
         }
     }
 
+    func resetScale() {
+        scale = 50.0
+    }
+
     private func drawAxes() {
         let axesDrawer = AxesDrawer(contentScaleFactor: contentScaleFactor)
         axesDrawer.drawAxesInRect(bounds, origin: origin, pointsPerUnit: scale)
