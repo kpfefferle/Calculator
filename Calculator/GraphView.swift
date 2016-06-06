@@ -32,6 +32,16 @@ class GraphView: UIView {
         }
     }
 
+    func changeScale(recognizer: UIPinchGestureRecognizer) {
+        switch recognizer.state {
+        case .Changed, .Ended:
+            scale *= recognizer.scale
+            recognizer.scale = 1.0
+        default:
+            break
+        }
+    }
+
     private func drawAxes() {
         let axesDrawer = AxesDrawer(contentScaleFactor: contentScaleFactor)
         axesDrawer.drawAxesInRect(bounds, origin: origin, pointsPerUnit: scale)
