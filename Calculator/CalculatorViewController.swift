@@ -127,7 +127,8 @@ class CalculatorViewController: UIViewController {
           let identifier = segue.identifier
           where identifier == "showGraphSegue" {
             graphVC.navigationItem.title = brain.description
-            graphVC.graphingFunction = { [ weak weakSelf = self ] (x: Double) -> Double? in
+            graphVC.graphingFunction = { [ weak weakSelf = self, program = brain.program ] (x: Double) -> Double? in
+                weakSelf?.brain.program = program
                 weakSelf?.brain.variableValues["M"] = x
                 return weakSelf?.brain.result
             }

@@ -71,8 +71,8 @@ class GraphView: UIView {
 
     private func yForX(xCoord: CGFloat) -> CGFloat {
         let xValue = valueForXCoordinate(xCoord)
-        let yValue = graphingFunction?(xValue)
-        return coordinateForYValue(yValue!)
+        let yValue = graphingFunction?(xValue) ?? 0.0
+        return coordinateForYValue(yValue)
     }
 
     private func drawGraph() {
