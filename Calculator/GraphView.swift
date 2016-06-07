@@ -11,15 +11,15 @@ import UIKit
 @IBDesignable
 class GraphView: UIView {
 
-    private let brain = CalculatorBrain()
-
     @IBInspectable
     var graphColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
     @IBInspectable
     var graphLine: CGFloat = 1.0 { didSet { setNeedsDisplay() } }
     @IBInspectable
     var scale: CGFloat = 50.0 { didSet { setNeedsDisplay() } }
-    
+
+    var graphingFunction: ((Double) -> Double?)? { didSet { setNeedsDisplay() } }
+
     private var setOrigin: CGPoint? { didSet { setNeedsDisplay() } }
     var origin: CGPoint {
         get {
@@ -27,14 +27,6 @@ class GraphView: UIView {
         }
         set {
             setOrigin = newValue
-        }
-    }
-    var program: CalculatorBrain.PropertyList {
-        get {
-            return brain.program
-        }
-        set {
-            brain.program = newValue
         }
     }
 
@@ -78,8 +70,9 @@ class GraphView: UIView {
     }
 
     private func yForX(xCoord: CGFloat) -> CGFloat {
-        brain.variableValues["M"] = valueForXCoordinate(xCoord)
-        return coordinateForYValue(brain.result)
+        let xValue = valueForXCoordinate(xCoord)
+        let yValue = graphingFunction?(xValue)
+        return coordinateForYValue(yValue!)
     }
 
     private func drawGraph() {

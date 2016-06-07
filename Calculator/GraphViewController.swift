@@ -12,6 +12,8 @@ class GraphViewController: UIViewController {
 
     var program: CalculatorBrain.PropertyList = [] { didSet { updateUI() } }
 
+    var graphingFunction: ((Double) -> Double?)? { didSet { updateUI() } }
+
     @IBOutlet weak var graphView: GraphView! {
         didSet {
             graphView.addGestureRecognizer(UIPinchGestureRecognizer(
@@ -31,7 +33,7 @@ class GraphViewController: UIViewController {
 
     private func updateUI() {
         if graphView != nil {
-            graphView.program = program
+            graphView.graphingFunction = graphingFunction
         }
     }
 
